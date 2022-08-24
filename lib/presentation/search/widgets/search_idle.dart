@@ -60,7 +60,7 @@ class TopSearchItemTile extends StatelessWidget {
             ),
           ),
         ),
-        CircleAvatar(
+        const CircleAvatar(
           radius: 25,
           backgroundColor: kWhiteColor,
           child: CircleAvatar(
