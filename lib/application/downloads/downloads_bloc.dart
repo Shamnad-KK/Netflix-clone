@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -17,6 +17,15 @@ class DownloadsBloc extends Bloc<DownloadsEvent, DownloadsState> {
   final IDownloadsFazard _downloadsFazard;
   DownloadsBloc(this._downloadsFazard) : super(DownloadsState.initial()) {
     on<_GetDownloads>((event, emit) async {
+      if (state.downloads.isNotEmpty) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            downloads: state.downloads,
+          ),
+        );
+        return;
+      }
       emit(
         state.copyWith(
           //Setting loading as true because API calling has started
