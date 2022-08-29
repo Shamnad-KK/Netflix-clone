@@ -23,7 +23,7 @@ class DownloadsRepository implements IDownloadsFazard {
         final List<Downloads> downloadsList = (response.data['results'] as List)
             .map((posterPath) => Downloads.fromJson(posterPath))
             .toList();
-        log(response.data.toString());
+        log(downloadsList.toString());
 
         return Right(downloadsList);
       } else {
