@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../../../application/downloads/downloads_bloc.dart' as _i8;
+import '../../../application/fast_laugh/fast_laugh_bloc.dart' as _i9;
 import '../../../application/search/search_bloc.dart' as _i7;
 import '../../../infrastructure/downloads/downloads_repository.dart' as _i4;
 import '../../../infrastructure/search/search_repository.dart' as _i6;
@@ -27,5 +28,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       _i7.SearchBloc(get<_i3.IDownloadsFazard>(), get<_i5.ISearchFazard>()));
   gh.factory<_i8.DownloadsBloc>(
       () => _i8.DownloadsBloc(get<_i3.IDownloadsFazard>()));
+  gh.factory<_i9.FastLaughBloc>(
+      () => _i9.FastLaughBloc(get<_i3.IDownloadsFazard>()));
   return get;
 }

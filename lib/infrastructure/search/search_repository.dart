@@ -26,6 +26,7 @@ class SearchRepository implements ISearchFazard {
         return const Left(MainFailure.serverFailure());
       }
     } catch (e) {
+      log(e.toString());
       return const Left(MainFailure.clientFailure());
     }
   }

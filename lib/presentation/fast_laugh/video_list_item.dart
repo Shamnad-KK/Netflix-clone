@@ -1,11 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
+import 'package:netflix_clone/core/strings.dart';
+import 'package:netflix_clone/domain/downloads/models/downloads.dart';
 
 class VideoListItem extends StatelessWidget {
   const VideoListItem({Key? key, required this.index}) : super(key: key);
   final int index;
   @override
   Widget build(BuildContext context) {
+    final posterPath =
+        VideoListItemInheritedWidget.of(context)?.movies.posterPath;
     return Stack(
       children: [
         Container(
@@ -36,14 +41,17 @@ class VideoListItem extends StatelessWidget {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
                       child: CircleAvatar(
                         radius: 30,
-                        backgroundImage: NetworkImage(
-                          'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/8cXbitsS6dWQ5gfMTZdorpAAzEH.jpg',
-                        ),
+                        backgroundImage: posterPath == null
+                            ? const NetworkImage(
+                                "https://ayupearl.com/wp-content/themes/dp-voyageur/img/post_thumbnail/noimage.png")
+                            : NetworkImage(
+                                "$imageAppendURL/$posterPath",
+                              ),
                       ),
                     ),
                     VideoActionWidget(icon: Icons.emoji_emotions, title: 'LOL'),
@@ -90,5 +98,28 @@ class VideoActionWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class VideoListItemInheritedWidget extends InheritedWidget {
+  final Widget widget;
+  final Downloads movies;
+
+  const VideoListItemInheritedWidget({
+    Key? key,
+    required this.widget,
+    required this.movies,
+  }) : super(
+          key: key,
+          child: widget,
+        );
+  @override
+  bool updateShouldNotify(covariant VideoListItemInheritedWidget oldWidget) {
+    return oldWidget.movies != movies;
+  }
+
+  static VideoListItemInheritedWidget? of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<VideoListItemInheritedWidget>();
   }
 }

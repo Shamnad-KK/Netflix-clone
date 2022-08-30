@@ -83,7 +83,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         // call search movie API
         final searchResultState =
             await searchFazard.getSearchMovies(movieQuery: event.movieQuery);
-        print(searchResultState);
+        log(searchResultState.toString());
 
         searchResultState.fold(
           (MainFailure failure) {

@@ -26,12 +26,15 @@ class SearchResultWidget extends StatelessWidget {
                 childAspectRatio: 1 / 1.4,
                 shrinkWrap: true,
                 crossAxisCount: 3,
-                children: List.generate(
-                    state.searchResultList.length,
-                    (index) => MainCard(
-                          imageURL:
-                              "$imageAppendURL${state.searchResultList[index].posterPath}",
-                        )),
+                children: List.generate(state.searchResultList.length, (index) {
+                  final image =
+                      "$imageAppendURL${state.searchResultList[index].posterPath}";
+                  return MainCard(
+                    imageURL: image == "https://image.tmdb.org/t/p/w500null"
+                        ? "https://ayupearl.com/wp-content/themes/dp-voyageur/img/post_thumbnail/noimage.png"
+                        : image,
+                  );
+                }),
               );
             },
           ),
