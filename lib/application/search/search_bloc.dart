@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -67,9 +69,45 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     });
 
     //On Search result statw=e
-    on<SearchMovie>((event, emit) {
-      // call search movie API
-      searchFazard.getSearchMovies(movieQuery: event.movieQuery);
-    });
+    on<SearchMovie>(
+      (event, emit) async {
+        emit(
+          state.copyWith(
+            searchIdleList: [],
+            searchResultList: [],
+            isLoading: true,
+            isError: false,
+          ),
+        );
+        log('searching for ${event.movieQuery}');
+        // call search movie API
+        final searchResultState =
+            await searchFazard.getSearchMovies(movieQuery: event.movieQuery);
+        print(searchResultState);
+
+        searchResultState.fold(
+          (MainFailure failure) {
+            emit(
+              state.copyWith(
+                searchIdleList: [],
+                searchResultList: [],
+                isLoading: false,
+                isError: true,
+              ),
+            );
+          },
+          (SearchResponse success) {
+            emit(
+              state.copyWith(
+                searchIdleList: [],
+                searchResultList: success.results,
+                isLoading: false,
+                isError: true,
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/core/constants.dart';
-import 'package:netflix_clone/presentation/search/widgets/search_result.dart';
+
+const imageURL =
+    'https://www.themoviedb.org/t/p/w220_and_h330_face/ox4goZd956BxqJH6iLwhWPL9ct4.jpg';
 
 class MainCard extends StatelessWidget {
   const MainCard({

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:netflix_clone/domain/core/api_end_points.dart';
@@ -16,6 +18,7 @@ class SearchRepository implements ISearchFazard {
           await Dio(BaseOptions()).get(ApiEndPoints.search, queryParameters: {
         'query': movieQuery,
       });
+      log(response.data.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         final searchResult = SearchResponse.fromJson(response.data);
         return Right(searchResult);

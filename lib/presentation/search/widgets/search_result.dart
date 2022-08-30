@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix_clone/application/search/search_bloc.dart';
 import 'package:netflix_clone/core/constants.dart';
+import 'package:netflix_clone/core/strings.dart';
 import 'package:netflix_clone/presentation/search/widgets/title.dart';
-
-const imageURL =
-    'https://www.themoviedb.org/t/p/w220_and_h330_face/ox4goZd956BxqJH6iLwhWPL9ct4.jpg';
 
 class SearchResultWidget extends StatelessWidget {
   const SearchResultWidget({Key? key}) : super(key: key);
@@ -18,13 +18,22 @@ class SearchResultWidget extends StatelessWidget {
         ),
         kHeight10,
         Expanded(
-          child: GridView.count(
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 1 / 1.4,
-            shrinkWrap: true,
-            crossAxisCount: 3,
-            children: List.generate(25, (index) => const MainCard()),
+          child: BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              return GridView.count(
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 1 / 1.4,
+                shrinkWrap: true,
+                crossAxisCount: 3,
+                children: List.generate(
+                    state.searchResultList.length,
+                    (index) => MainCard(
+                          imageURL:
+                              "$imageAppendURL${state.searchResultList[index].posterPath}",
+                        )),
+              );
+            },
           ),
         ),
       ],
@@ -33,15 +42,15 @@ class SearchResultWidget extends StatelessWidget {
 }
 
 class MainCard extends StatelessWidget {
-  const MainCard({Key? key}) : super(key: key);
-
+  const MainCard({Key? key, required this.imageURL}) : super(key: key);
+  final String imageURL;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(7),
-        image: const DecorationImage(
-            image: NetworkImage(imageURL), fit: BoxFit.cover),
+        image:
+            DecorationImage(image: NetworkImage(imageURL), fit: BoxFit.cover),
       ),
     );
   }
