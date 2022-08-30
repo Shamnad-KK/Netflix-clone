@@ -5,7 +5,9 @@ import 'package:netflix_clone/core/constants.dart';
 class VideoWidget extends StatelessWidget {
   const VideoWidget({
     Key? key,
+    required this.image,
   }) : super(key: key);
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,25 @@ class VideoWidget extends StatelessWidget {
           width: double.infinity,
           height: 200,
           child: Image.network(
-            kHotAndNewTempImg,
+            image,
             fit: BoxFit.cover,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? progress) {
+              if (progress == null) {
+                //which means no loading and we should return our child =>(Image)
+                return child;
+              } else {
+                return const CircularProgressIndicator(
+                  strokeWidth: 2,
+                );
+              }
+            },
+            errorBuilder:
+                (BuildContext context, Object error, StackTrace? stackTrace) {
+              return const Center(
+                child: Icon(Icons.wifi),
+              );
+            },
           ),
         ),
         Positioned(

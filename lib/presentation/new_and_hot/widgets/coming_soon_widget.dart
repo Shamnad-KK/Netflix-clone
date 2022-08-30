@@ -7,7 +7,19 @@ import 'package:netflix_clone/presentation/widgets/video_widget.dart';
 class ComingSoonWidget extends StatelessWidget {
   const ComingSoonWidget({
     Key? key,
+    required this.id,
+    required this.month,
+    required this.day,
+    required this.posterPath,
+    required this.movieName,
+    required this.overview,
   }) : super(key: key);
+  final String id;
+  final String month;
+  final String day;
+  final String posterPath;
+  final String movieName;
+  final String overview;
 
   @override
   Widget build(BuildContext context) {
@@ -16,24 +28,24 @@ class ComingSoonWidget extends StatelessWidget {
       children: [
         kHeight10,
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: 50,
-              height: 450,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'FEB',
-                    style: TextStyle(
+                    month,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: kGreyColor,
                     ),
                   ),
                   Text(
-                    '11',
-                    style: TextStyle(
+                    day,
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
@@ -42,68 +54,68 @@ class ComingSoonWidget extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: SizedBox(
-                height: 450,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const VideoWidget(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Expanded(
-                          child: Text(
-                            'TALL GIRL 2',
-                            style: TextStyle(
-                              letterSpacing: -5,
-                              fontSize: 35,
-                              fontWeight: FontWeight.bold,
-                            ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  VideoWidget(
+                    image: posterPath,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          movieName,
+                          style: const TextStyle(
+                            letterSpacing: -5,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Row(
-                          children: const [
-                            CustomButtonWidget(
-                              icon: Icons.notification_add,
-                              iconSize: 16,
-                              title: 'Remind Me',
-                              textSize: 13,
-                            ),
-                            kWidth10,
-                            CustomButtonWidget(
-                              icon: Icons.notification_add,
-                              iconSize: 16,
-                              title: 'Info',
-                              textSize: 13,
-                            ),
-                            kWidth10
-                          ],
-                        )
-                      ],
-                    ),
-                    kHeight10,
-                    const Text('Coming on Friday'),
-                    kHeight10,
-                    const Text(
-                      'Tall Girl 2',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
                       ),
+                      Row(
+                        children: const [
+                          CustomButtonWidget(
+                            icon: Icons.notification_add,
+                            iconSize: 16,
+                            title: 'Remind Me',
+                            textSize: 13,
+                          ),
+                          kWidth10,
+                          CustomButtonWidget(
+                            icon: Icons.notification_add,
+                            iconSize: 16,
+                            title: 'Info',
+                            textSize: 13,
+                          ),
+                          kWidth10
+                        ],
+                      )
+                    ],
+                  ),
+                  kHeight10,
+                  Text('Coming on $month $day'),
+                  kHeight10,
+                  Text(
+                    movieName,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    kHeight10,
-                    const Text(
-                      'Landing the lead in the school musical is a dream come true for Jodi, until the pressure sends her confidence - and her relationship - into a tailspain.',
-                      style: TextStyle(
-                        color: kGreyColor,
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                  kHeight10,
+                  Text(
+                    overview,
+                    style: const TextStyle(
+                      color: kGreyColor,
+                    ),
+                  )
+                ],
               ),
             ),
           ],
         ),
+        kHeight20
       ],
     );
   }

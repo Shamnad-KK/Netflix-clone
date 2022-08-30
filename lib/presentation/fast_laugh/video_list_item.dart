@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:netflix_clone/application/fast_laugh/fast_laugh_bloc.dart';
 import 'package:netflix_clone/core/colors/colors.dart';
 import 'package:netflix_clone/core/strings.dart';
@@ -19,7 +18,7 @@ class VideoListItem extends StatefulWidget {
 
 class _VideoListItemState extends State<VideoListItem> {
   late VideoPlayerController _videoPlayerController;
-  late bool isPlaying;
+  ValueNotifier<bool> isPlaying = ValueNotifier(true);
   @override
   void initState() {
     _videoPlayerController = VideoPlayerController.network(
@@ -27,8 +26,8 @@ class _VideoListItemState extends State<VideoListItem> {
     _videoPlayerController.initialize().then((value) {
       setState(() {});
     });
-    isPlaying = true;
-    if (isPlaying == true) {
+
+    if (isPlaying.value == true) {
       _videoPlayerController.play();
     }
     super.initState();
@@ -124,20 +123,24 @@ class _VideoListItemState extends State<VideoListItem> {
                       child: const VideoActionWidget(
                           icon: Icons.share, title: 'Share'),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isPlaying = !isPlaying;
-                          isPlaying == true
-                              ? _videoPlayerController.pause()
-                              : _videoPlayerController.play();
-                        });
+                    ValueListenableBuilder(
+                      builder: (BuildContext context, value, Widget? child) {
+                        return GestureDetector(
+                          onTap: () {
+                            isPlaying.value = !isPlaying.value;
+                            isPlaying.value == true
+                                ? _videoPlayerController.pause()
+                                : _videoPlayerController.play();
+                          },
+                          child: VideoActionWidget(
+                            icon: isPlaying.value == true
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                            title: isPlaying.value == true ? "Pause" : 'Play',
+                          ),
+                        );
                       },
-                      child: VideoActionWidget(
-                        icon:
-                            isPlaying == true ? Icons.pause : Icons.play_arrow,
-                        title: isPlaying == true ? "Pause" : 'Play',
-                      ),
+                      valueListenable: isPlaying,
                     ),
                   ],
                 )

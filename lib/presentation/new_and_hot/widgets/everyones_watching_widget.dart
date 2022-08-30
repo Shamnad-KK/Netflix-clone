@@ -7,7 +7,13 @@ import 'package:netflix_clone/presentation/widgets/video_widget.dart';
 class EveryOnesWatchingWidget extends StatelessWidget {
   const EveryOnesWatchingWidget({
     Key? key,
+    required this.posterPath,
+    required this.seriesName,
+    required this.overview,
   }) : super(key: key);
+  final String posterPath;
+  final String seriesName;
+  final String overview;
 
   @override
   Widget build(BuildContext context) {
@@ -15,22 +21,30 @@ class EveryOnesWatchingWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         kHeight10,
-        const Text(
-          'Friends',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            seriesName,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         kHeight10,
-        const Text(
-          'This hit sitcome follows the merry disadventures of siz 20-something pals as they navigate the pitfalls of work, life and love in 1980s Manhattan.',
-          style: TextStyle(
-            color: kGreyColor,
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            'This hit sitcome follows the merry disadventures of siz 20-something pals as they navigate the pitfalls of work, life and love in 1980s Manhattan.',
+            style: TextStyle(
+              color: kGreyColor,
+            ),
           ),
         ),
         kHeight50,
-        const VideoWidget(),
+        VideoWidget(
+          image: posterPath,
+        ),
         kHeight10,
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
