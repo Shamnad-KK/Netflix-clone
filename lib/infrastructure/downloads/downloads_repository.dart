@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:netflix_clone/domain/core/api_end_points.dart';
 import 'package:netflix_clone/domain/core/failures/main_failure.dart';
@@ -33,7 +34,9 @@ class DownloadsRepository implements IDownloadsFazard {
         ); //Return type is either left or right
       }
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       //So the error is not from the server side then It is from client side
       return const Left(
         MainFailure.clientFailure(), //Return type is either left or right

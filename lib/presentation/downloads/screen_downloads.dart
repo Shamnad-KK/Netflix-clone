@@ -12,7 +12,7 @@ class ScreenDownloads extends StatelessWidget {
   ScreenDownloads({Key? key}) : super(key: key);
   final _widgetList = [
     const _SmartDownloads(),
-    Section2(),
+    const Section2(),
     const Section3(),
   ];
 
