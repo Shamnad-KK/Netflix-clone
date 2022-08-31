@@ -80,20 +80,6 @@ class ScreenNewAndHot extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _buildComingSoon() {
-  //   return ListView.builder(
-  //     itemBuilder: (context, index) => const ComingSoonWidget(),
-  //     itemCount: 5,
-  //   );
-  // }
-
-  Widget _buildEveryOneWatching() {
-    return ListView.builder(
-      itemBuilder: (context, index) => SizedBox(),
-      itemCount: 5,
-    );
-  }
 }
 
 class ComingSoonList extends StatelessWidget {
