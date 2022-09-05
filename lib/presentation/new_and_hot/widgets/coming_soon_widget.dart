@@ -83,7 +83,7 @@ class ComingSoonWidget extends StatelessWidget {
                           ),
                           kWidth10,
                           CustomButtonWidget(
-                            icon: Icons.notification_add,
+                            icon: Icons.info,
                             iconSize: 16,
                             title: 'Info',
                             textSize: 13,

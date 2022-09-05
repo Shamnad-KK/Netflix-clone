@@ -41,7 +41,7 @@ class EveryOnesWatchingWidget extends StatelessWidget {
             ),
           ),
         ),
-        kHeight50,
+        kHeight20,
         VideoWidget(
           image: posterPath,
         ),
@@ -71,7 +71,8 @@ class EveryOnesWatchingWidget extends StatelessWidget {
             ),
             kWidth10,
           ],
-        )
+        ),
+        kHeight50,
       ],
     );
   }
